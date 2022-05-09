@@ -1,3 +1,5 @@
+package java.View;
+
 
 public class Demineur {
 

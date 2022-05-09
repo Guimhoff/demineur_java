@@ -1,5 +1,6 @@
-import javax.swing.JButton;
+package java.View;
 
+import javax.swing.JButton;
 import javax.swing.*;
 import java.awt.Insets;
 
