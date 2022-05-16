@@ -1,4 +1,4 @@
-package java.View;
+package app.View;
 
 import javax.swing.JButton;
 import javax.swing.*;

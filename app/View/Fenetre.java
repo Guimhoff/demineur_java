@@ -1,10 +1,12 @@
-package java.View;
+package app.View;
+
 import javax.swing.*;
+
 import java.awt.event.*;
 
 public class Fenetre extends JFrame {
     
-    Fenetre() {
+    public Fenetre() {
         super("Démineur");
         
         WindowListener l = new WindowAdapter() {

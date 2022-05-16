@@ -1,5 +1,4 @@
-package java.View;
-
+import app.View.Fenetre;
 
 public class Demineur {
 
