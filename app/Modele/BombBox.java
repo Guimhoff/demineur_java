@@ -2,11 +2,15 @@ package app.Modele;
 
 public class BombBox extends Box {
 
-    BombBox(int x, int y) {
-        super(Box.bombBox, x, y);
+    BombBox(int x, int y, Map map) {
+        super(Box.bombBox, x, y, map);
     }
-
-    public void onClick() {
-
+    
+    BombBox(Position pos, Map map) {
+        super(Box.bombBox, pos, map);
+    }
+    
+    protected void clickAction() {
+        
     }
 }

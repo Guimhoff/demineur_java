@@ -2,11 +2,17 @@ package app.Modele;
 
 public class EmptyBox extends Box {
 
-    EmptyBox(int x, int y) {
-        super(Box.emptyBox, x, y);
+    EmptyBox(int x, int y, Map map) {
+        super(Box.emptyBox, x, y, map);
     }
 
-    public void onClick() {
+    EmptyBox(Position pos, Map map) {
+        super(Box.emptyBox, pos, map);
+    }
 
+    protected void clickAction() {
+        
+        _discovered = true;
+        
     }
 }

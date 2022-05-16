@@ -23,5 +23,9 @@ public class Position {
     public int get_y() {
         return _y;
     }
+    
+    public Position add(Position pos) {
+        return new Position(_x + pos.get_x(), _y + pos.get_y());
+    }
 
 }

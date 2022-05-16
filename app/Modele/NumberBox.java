@@ -1,12 +1,25 @@
 package app.Modele;
 
 public class NumberBox extends Box {
-
-    NumberBox(int x, int y) {
-        super(Box.numberBox, x, y);
+    
+    int _closeBombs;
+    
+    NumberBox(int x, int y, Map map) {
+        super(Box.numberBox, x, y, map);
+        _closeBombs = 1;
+    }
+    
+    NumberBox(Position pos, Map map) {
+        super(Box.numberBox, pos, map);
+        _closeBombs = 1;
     }
 
-    public void onClick() {
+    protected void clickAction() {
 
     }
+    
+    public void addCloseBomb() {
+        _closeBombs++;
+    }
+    
 }

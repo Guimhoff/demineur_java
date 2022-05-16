@@ -9,15 +9,26 @@ public abstract class Box {
     public static String numberBox = "numberBox";
 
     private String _type;
-    private Position _pos;
-    private Boolean _marked;
-    private Boolean _discovered;
+    protected Position _pos;
+    protected Boolean _marked;
+    protected Boolean _discovered;
+    
+    protected Map _map;
 
-    Box(String type, int x, int y) {
+    Box(String type, int x, int y, Map map) {
         _type = type;
         _pos = new Position(x, y);
         _discovered = false;
         _marked = false;
+        _map = map;
+    }
+    
+    Box(String type, Position pos, Map map) {
+        _type = type;
+        _pos = pos;
+        _discovered = false;
+        _marked = false;
+        _map = map;
     }
 
     /**
@@ -48,6 +59,20 @@ public abstract class Box {
         return _discovered;
     }
 
-    abstract void onClick();
+    abstract protected void clickAction();
     
+    public void onClick() {
+        if (_discovered) return;
+        if (_marked) return;
+        clickAction();
+    }
+    
+    public void rightClick() {
+        if (_discovered)
+            return;
+        
+        _marked = !_marked;
+    }
+    
+    public void addCloseBomb() {}
 }
