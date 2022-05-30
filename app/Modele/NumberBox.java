@@ -15,7 +15,7 @@ public class NumberBox extends Box {
     }
 
     protected void clickAction() {
-
+        _discovered = true;
     }
     
     public void addCloseBomb() {

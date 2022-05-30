@@ -13,17 +13,16 @@ public class Fenetre extends JFrame {
             public void windowClosing(WindowEvent e){
                System.exit(0);
             }
-         };
-         
+        };
+        
         addWindowListener(l);
-
-        Case bouton = new Case();
-  
-        JPanel panneau = new JPanel();
-        panneau.add(bouton);
-        setContentPane(panneau);
-  
-        setSize(1000,1000);
+        
+        Menu menu = new Menu();
+        
+        setContentPane(menu);
+        
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(900,900);
         setVisible(true);
     }
 }

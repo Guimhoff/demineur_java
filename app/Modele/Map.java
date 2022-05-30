@@ -13,6 +13,8 @@ public class Map {
 
     private ArrayList<Position> _potNeigh;
     private ArrayList<Position> _dirPotNeigh;
+    
+    private boolean _gameOver;
 
 
     Map(int length, int width, int bombNumber) {
@@ -21,6 +23,8 @@ public class Map {
         _width = width;
 
         _bombNumber = bombNumber;
+        
+        _gameOver = false;
         
         initiateDirPotNeigh();
         initiatePotNeigh();
@@ -62,12 +66,29 @@ public class Map {
 
     }
     
+    public void GameLost() {
+        _gameOver = true;
+        for (var y=0; y<_width; y++) {
+            for (var x=0; x<_length; x++) {
+                Box box = grid(new Position(x, y));
+                if (box.get_type() == Box.bombBox) {
+                    box.reveal();
+                }
+            }
+        }
+        return;
+    }
+    
     public Box grid(Position pos) {
         return _grid[pos.get_y()][pos.get_x()];
     }
     
     private void setGrid(Position pos, Box newBox) {
         _grid[pos.get_y()][pos.get_x()] = newBox;
+    }
+    
+    public boolean get_gameOver() {
+        return _gameOver;
     }
     
     private boolean isOnMap (Position pos) {
@@ -107,11 +128,11 @@ public class Map {
         _dirPotNeigh.add(new Position(-1, 0));
     }
 
-    private ArrayList<Position> neighbours(int x, int y) {
+    public ArrayList<Position> neighbours(int x, int y) {
         return pattern(new Position(x, y), _potNeigh);
     }
     
-    private ArrayList<Position> neighbours(Position pos) {
+    public ArrayList<Position> neighbours(Position pos) {
         return pattern(pos, _potNeigh);
     }
     

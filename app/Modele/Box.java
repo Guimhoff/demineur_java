@@ -1,4 +1,5 @@
 package app.Modele;
+import java.util.ArrayList;
 
 
 
@@ -12,6 +13,7 @@ public abstract class Box {
     protected Position _pos;
     protected Boolean _marked;
     protected Boolean _discovered;
+    protected Boolean _exploded;
     
     protected Map _map;
 
@@ -58,18 +60,33 @@ public abstract class Box {
     public Boolean get_discovered() {
         return _discovered;
     }
+    
+    public void reveal() {
+        _discovered = true;
+        return;
+    }
+    
+    public ArrayList<Position> neighbours() {
+        return _map.neighbours(_pos);
+    }
+
+    public ArrayList<Position> directNeighbours() {
+        return _map.directNeighbours(_pos);
+    }
 
     abstract protected void clickAction();
     
     public void onClick() {
+        if (_map.get_gameOver()) return;
         if (_discovered) return;
         if (_marked) return;
+        
         clickAction();
     }
     
     public void rightClick() {
-        if (_discovered)
-            return;
+        if (_map.get_gameOver()) return;
+        if (_discovered) return;
         
         _marked = !_marked;
     }
