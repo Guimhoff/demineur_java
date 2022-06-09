@@ -13,10 +13,10 @@ public class EmptyBox extends Box {
     protected void clickAction() {
         _discovered = true;
             
-        for (Position pos: directNeighbours()) {
+        for (Position pos: neighbours()) {
             Box box = _map.grid(pos);
-            if (box.get_type() == Box.emptyBox && !box._discovered) {
-                _map.grid(pos).reveal();
+            if (!box._discovered) {
+                _map.grid(pos).clickAction();
             }
         } 
     }

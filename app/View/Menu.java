@@ -1,30 +1,59 @@
 package app.View;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 public class Menu extends JPanel {
     
-    public Menu () {
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+    private Fenetre _parent;
+    
+    public Menu (Fenetre parent) {
+        _parent = parent;
+    
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
         
-        this.add(Box.createHorizontalStrut(10));
-        
-        MenuButton _continueButton = new MenuButton("Continuer");
-        this.add(_continueButton);
-        
-        MenuButton _playButton = new MenuButton("Nouvelle Partie");
-        this.add(_playButton);
-        
-        MenuButton _quitButton = new MenuButton("Quitter");
-        this.add(_quitButton);
+        gbc.gridy = 0;
+        MenuButton _continueButton = new MenuButton(this, "Continuer", "resume");
+        this.add(_continueButton, gbc);
 
-        this.add(Box.createHorizontalStrut(10));
+        gbc.gridy = 1;
+        MenuButton _playButton = new MenuButton(this, "Nouvelle Partie", "newGame");
+        this.add(_playButton, gbc);
 
+        gbc.gridy = 2;
+        MenuButton _quitButton = new MenuButton(this, "Quitter", "quit");
+        this.add(_quitButton, gbc);
         
-        
-        //this.add(new JSeparator());
+    }
+    
+    
+    public void execute(String function){
+        switch (function){
+            case "quit":
+                quit();
+                break;
+            case "resume":
+                resume();
+                break;
+            case "newGame":
+                newGame();
+                break;
+        }
+    }
+    
+    private void quit(){
+        System.exit(0);
+    }
+    
+    private void resume(){
+        System.out.println("Reprise de la partie");
+        //_parent.switchtoGame();
+    }
+    
+    private void newGame(){
+        System.out.println("Nouvelle partie");
+        _parent.switchToSettings();
     }
 }

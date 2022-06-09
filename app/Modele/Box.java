@@ -2,12 +2,11 @@ package app.Modele;
 import java.util.ArrayList;
 
 
-
 public abstract class Box {
 
-    public static String emptyBox = "emptyBox";
-    public static String bombBox = "bombBox";
-    public static String numberBox = "numberBox";
+    public static final String emptyBox = "emptyBox";
+    public static final String bombBox = "bombBox";
+    public static final String numberBox = "numberBox";
 
     private String _type;
     protected Position _pos;
@@ -16,7 +15,7 @@ public abstract class Box {
     protected Boolean _exploded;
     
     protected Map _map;
-
+    
     Box(String type, int x, int y, Map map) {
         _type = type;
         _pos = new Position(x, y);
@@ -92,4 +91,8 @@ public abstract class Box {
     }
     
     public void addCloseBomb() {}
+
+    public int closeBombs() {
+        return -1;
+    }
 }

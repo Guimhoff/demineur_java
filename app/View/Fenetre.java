@@ -1,10 +1,12 @@
 package app.View;
 
 import javax.swing.*;
-
 import java.awt.event.*;
+import app.Modele.Map;
 
 public class Fenetre extends JFrame {
+    
+    JPanel _activeWindow;
     
     public Fenetre() {
         super("Démineur");
@@ -17,12 +19,29 @@ public class Fenetre extends JFrame {
         
         addWindowListener(l);
         
-        Menu menu = new Menu();
+        _activeWindow = new JPanel();
+        switchToMenu();
         
-        setContentPane(menu);
         
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(900,900);
-        setVisible(true);
+    }
+    
+    public void switchToMenu(){
+        _activeWindow.setVisible(false);
+        _activeWindow = new Menu(this);
+        setContentPane(_activeWindow);
+    }
+    
+    public void switchToSettings(){
+        _activeWindow.setVisible(false);
+        _activeWindow = new GameSettings(this);
+        setContentPane(_activeWindow);
+    }
+    
+    public void switchtoGame(Map map){
+        _activeWindow.setVisible(false);
+        _activeWindow = new Game(this, map);
+        setContentPane(_activeWindow);
     }
 }

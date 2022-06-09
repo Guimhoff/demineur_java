@@ -2,7 +2,7 @@ package app.Modele;
 
 public class NumberBox extends Box {
     
-    int _closeBombs;
+    private int _closeBombs;
     
     NumberBox(int x, int y, Map map) {
         super(Box.numberBox, x, y, map);
@@ -13,7 +13,11 @@ public class NumberBox extends Box {
         super(Box.numberBox, pos, map);
         _closeBombs = 1;
     }
-
+    
+    public int closeBombs() {
+        return _closeBombs;
+    }
+    
     protected void clickAction() {
         _discovered = true;
     }

@@ -17,7 +17,7 @@ public class Map {
     private boolean _gameOver;
 
 
-    Map(int length, int width, int bombNumber) {
+    public Map(int length, int width, int bombNumber) {
         _grid = new Box[width][length];
         _length = length;
         _width = width;
@@ -79,13 +79,24 @@ public class Map {
         return;
     }
     
+    public Box[][] grid() {
+        return _grid;
+    }
+    
     public Box grid(Position pos) {
         return _grid[pos.get_y()][pos.get_x()];
+    }
+    
+    public Box grid(int x, int y) {
+        return _grid[y][x];
     }
     
     private void setGrid(Position pos, Box newBox) {
         _grid[pos.get_y()][pos.get_x()] = newBox;
     }
+    
+    public int length() { return _length; }
+    public int width() { return _width; }
     
     public boolean get_gameOver() {
         return _gameOver;
@@ -109,7 +120,7 @@ public class Map {
     }
     
     private void initiatePotNeigh() {
-        ArrayList<Position> _potNeigh = new ArrayList<Position>();
+        _potNeigh = new ArrayList<Position>();
         _potNeigh.add(new Position(0, 1));
         _potNeigh.add(new Position(1, 1));
         _potNeigh.add(new Position(1, 0));
@@ -118,14 +129,16 @@ public class Map {
         _potNeigh.add(new Position(-1, -1));
         _potNeigh.add(new Position(-1, 0));
         _potNeigh.add(new Position(-1, 1));
+        System.out.println("potNeigh initialisé");
     }
     
     private void initiateDirPotNeigh() {
-        ArrayList<Position> _dirPotNeigh = new ArrayList<Position>();
+        _dirPotNeigh = new ArrayList<Position>();
         _dirPotNeigh.add(new Position(0, 1));
         _dirPotNeigh.add(new Position(1, 0));
         _dirPotNeigh.add(new Position(0, -1));
         _dirPotNeigh.add(new Position(-1, 0));
+        System.out.println("dirPotNeigh initialisé");
     }
 
     public ArrayList<Position> neighbours(int x, int y) {
