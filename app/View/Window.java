@@ -10,11 +10,15 @@ public class Window extends JFrame {
     /* active panel */
     JPanel _activeWindow;
     
+    /* unique instance of Window */
+    public static Window window;
+    
     /**
      * Constructor
      */
     public Window() {
         super("Démineur");
+        window = this;
         
         WindowListener l = new WindowAdapter() {
             public void windowClosing(WindowEvent e){
@@ -25,19 +29,31 @@ public class Window extends JFrame {
         addWindowListener(l);
         
         _activeWindow = new JPanel();
+        Game.Load();
         switchToMenu();
-        
         
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(900,900);
         
 
-        Thread thread = new Thread(){
+        Thread thread0 = new Thread(){
+            public void run(){
+                Map.initiatePotNeigh();
+            }
+        };
+        thread0.start();
+        Thread thread1 = new Thread(){
             public void run(){
                 Case.earlyInit();
             }
         };
-        thread.start();
+        thread1.start();
+        Thread thread2 = new Thread(){
+            public void run(){
+                GameSettings.loadSettings();
+            }
+        };
+        thread2.start();
     }
     
     /**
@@ -45,7 +61,7 @@ public class Window extends JFrame {
      */
     public void switchToMenu(){
         _activeWindow.setVisible(false);
-        _activeWindow = new Menu(this);
+        _activeWindow = new Menu();
         setContentPane(_activeWindow);
     }
 
@@ -54,16 +70,33 @@ public class Window extends JFrame {
      */
     public void switchToSettings(){
         _activeWindow.setVisible(false);
-        _activeWindow = new GameSettings(this);
+        _activeWindow = new GameSettings();
+        setContentPane(_activeWindow);
+    }
+
+    /**
+     * Switch the panel displayed to game, providing a new game
+     */
+    public void switchtoGame(Map map){
+        _activeWindow.setVisible(false);
+        _activeWindow = new Game(map);
         setContentPane(_activeWindow);
     }
 
     /**
      * Switch the panel displayed to game
      */
-    public void switchtoGame(Map map){
+    public void switchtoGame(){
         _activeWindow.setVisible(false);
-        _activeWindow = new Game(this, map);
+        _activeWindow = new Game();
         setContentPane(_activeWindow);
+    }
+    
+    /**
+     * Get the save directory
+     * @return String containing save directory
+     */
+    public static String saveDirectory() {
+        return System.getProperty("java.io.tmpdir") + "Demineur" + System.getProperty("file.separator");
     }
 }

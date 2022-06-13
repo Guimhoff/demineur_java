@@ -77,12 +77,12 @@ public class Case extends JButton {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(SwingUtilities.isRightMouseButton(e)){
-                    _parent._map.rightClick(pos);
+                    _parent.get_map().rightClick(pos);
                     refresh();
                 } else {
-                    _parent._map.leftClick(pos);
-                    String boxType = _parent._map.grid(_pos.get_x(), _pos.get_y()).get_type();
-                    if (boxType == Box.emptyBox || boxType == Box.bombBox)
+                    _parent.get_map().leftClick(pos);
+                    String boxType = _parent.get_map().grid(_pos.get_x(), _pos.get_y()).get_type();
+                    if (boxType.hashCode() == Box.emptyBox.hashCode() || boxType.hashCode() == Box.bombBox.hashCode())
                         _parent.refresh();
                     else
                         refresh();
@@ -113,7 +113,7 @@ public class Case extends JButton {
      * Refreshs the icon
      */
     public void refresh(){
-        Box box = _parent._map.grid(_pos);
+        Box box = _parent.get_map().grid(_pos);
         
         if (box.get_marked()) {
             changeIcon("flag");

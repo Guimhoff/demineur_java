@@ -8,13 +8,13 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import app.Modele.Map;
+
 public class HeadGameUI extends JPanel {
     /* Head of the game UI */
     
     /* Game UI */
     Game _parent;
-    /* Window parent of the game */
-    Window _fenetre;
     
     /* Label displaying victory or defeat */
     private JLabel _gameState;
@@ -24,11 +24,9 @@ public class HeadGameUI extends JPanel {
     /**
      * Constructor
      * @param parent
-     * @param fenetre
      */
-    HeadGameUI(Game parent, Window fenetre) {
+    HeadGameUI(Game parent) {
         _parent = parent;
-        _fenetre = fenetre;
         
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -40,7 +38,7 @@ public class HeadGameUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Retour au menu");
-                _fenetre.switchToMenu();
+                Window.window.switchToMenu();
             }
         });
         
@@ -62,11 +60,11 @@ public class HeadGameUI extends JPanel {
      */
     public void refresh() {
         
-        _bombCount.setText(_parent._map.get_markedBoxes() + "/" + _parent._map.get_bombNumber() + " bombes marquées");
+        _bombCount.setText(Map.map.get_markedBoxes() + "/" + Map.map.get_bombNumber() + " bombes marquées");
         
-        if (_parent._map.get_defeat()) {
+        if (Map.map.get_defeat()) {
             _gameState.setText("  Vous avez perdu !  ");
-        } else if (_parent._map.get_victory()) {
+        } else if (Map.map.get_victory()) {
             _gameState.setText("  Vous avez gagné !  ");
         } else {
             _gameState.setText("                     ");

@@ -1,6 +1,8 @@
 package app.Modele;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable {
     /* Class representing a position on the map */
 
     /* x coordinate */

@@ -1,8 +1,9 @@
 package app.Modele;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public abstract class Box {
+public abstract class Box implements Serializable {
     /* Abstract class representing a box which can contain a nothing, a bomb, or a number */
 
     public static final String emptyBox = "emptyBox";
@@ -20,9 +21,6 @@ public abstract class Box {
     /* Has the box exploded */
     protected Boolean _exploded;
     
-    /* Map on which is located the box */
-    protected Map _map;
-    
     /**
      * Constructor using direct coordinates
      * @param type
@@ -35,7 +33,6 @@ public abstract class Box {
         _pos = new Position(x, y);
         _discovered = false;
         _marked = false;
-        _map = map;
     }
     
     /**
@@ -49,9 +46,8 @@ public abstract class Box {
         _pos = pos;
         _discovered = false;
         _marked = false;
-        _map = map;
     }
-
+    
     /**
      * @return the _type
      */
@@ -102,7 +98,7 @@ public abstract class Box {
      * @return array of positions
      */
     public ArrayList<Position> neighbours() {
-        return _map.neighbours(_pos);
+        return Map.map.neighbours(_pos);
     }
     
     /**
@@ -114,12 +110,12 @@ public abstract class Box {
      * Actions executed when left-clicking on the box, whatever is the box type
      */
     public void onClick() {
-        if (_map.get_gameOver()) return;
+        if (Map.map.get_gameOver()) return;
         if (_discovered) return;
         if (_marked) return;
         
         clickAction();
-        _map.unhideBox();
+        Map.map.unhideBox();
         return;
     }
     
@@ -127,15 +123,15 @@ public abstract class Box {
      * Actions executed when right-clicking on the box (indentical for each box type)
      */
     public void rightClick() {
-        if (_map.get_gameOver()) return;
+        if (Map.map.get_gameOver()) return;
         if (_discovered) return;
         
         _marked = !_marked;
         
         if (_marked)
-            _map.addMarkedBox();
+            Map.map.addMarkedBox();
         else
-            _map.removeMarkedBox();
+            Map.map.removeMarkedBox();
         
         return;
     }

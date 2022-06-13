@@ -28,7 +28,7 @@ public class BombBox extends Box {
      */
     protected void clickAction() {
         _exploded = true;
-        _map.GameLost();
+        Map.map.GameLost();
         return;
     }
 }

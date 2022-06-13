@@ -1,10 +1,14 @@
 package app.Modele;
 
 import java.util.Random;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Map {
+public class Map implements Serializable {
     /* Class representing the map */
+    
+    /* Only live instance of map */
+    public static Map map;
     
     /* Grid containing the boxes */
     private Box[][] _grid;
@@ -21,7 +25,7 @@ public class Map {
     private int _markedBoxes;
     
     /* List of positions of the neighbours of a position relatively to this position */
-    private ArrayList<Position> _potNeigh;
+    private static ArrayList<Position> _potNeigh;
     
     /* Has the game been initialized (it is done after first click to avoid clicking on a bomb first) */
     private boolean _gameInitialized;
@@ -53,8 +57,15 @@ public class Map {
         _gameInitialized = false;
         _gameOver = false;
         
-        initiatePotNeigh();
         preInit();
+    }
+    
+    /**
+     * Set the live map
+     * @param map
+     */
+    public static void setMap(Map map) {
+        Map.map = map;
     }
     
     /**
@@ -166,7 +177,7 @@ public class Map {
         for (var y=0; y<_length; y++) {
             for (var x=0; x<_width; x++) {
                 Box box = grid(new Position(x, y));
-                if (box.get_type() == Box.bombBox) {
+                if (box.get_type().hashCode() == Box.bombBox.hashCode()) {
                     box.reveal();
                 }
             }
@@ -285,7 +296,7 @@ public class Map {
     /**
      * Initiates the pattern of potential neighbours
      */
-    private void initiatePotNeigh() {
+    public static void initiatePotNeigh() {
         _potNeigh = new ArrayList<Position>();
         _potNeigh.add(new Position(0, 1));
         _potNeigh.add(new Position(1, 1));

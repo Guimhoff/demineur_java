@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
+import app.Modele.Map;
+
 public class CaseGrid extends JPanel {
     /* UI grid of cases */
     
@@ -26,8 +28,8 @@ public class CaseGrid extends JPanel {
         
         caseList = new ArrayList<Case>();
         
-        int sizeX = _parent._map.width();
-        int sizeY = _parent._map.length();
+        int sizeX = Map.map.width();
+        int sizeY = Map.map.length();
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

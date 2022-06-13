@@ -8,7 +8,9 @@ public class Demineur {
    * @param argv
    */
   public static void main(String argv[]) {
+    
     Window f = new Window();
     f.setVisible(true);
   }
+  
 }

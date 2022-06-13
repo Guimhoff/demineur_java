@@ -2,30 +2,27 @@ package app.View;
 
 import javax.swing.JPanel;
 
-import app.Modele.Map;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 public class Menu extends JPanel {
     /* Main menu of the game (UI) */
     
-    /* Parent window */
-    private Window _parent;
+    /* If a game is loaded and ready to be resumed */
+    private static Boolean canResume = false;
     
     /**
      * Constructor
-     * @param parent
      */
-    public Menu (Window parent) {
-        _parent = parent;
+    public Menu () {
     
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
         gbc.gridy = 0;
-        MenuButton _quickButton = new MenuButton(this, "Partie rapide", "quickGame");
-        this.add(_quickButton, gbc);
+        MenuButton _resumeButton = new MenuButton(this, "Reprendre la partie", "resume");
+        _resumeButton.setEnabled(canResume);
+        this.add(_resumeButton, gbc);
 
         gbc.gridy = 1;
         MenuButton _playButton = new MenuButton(this, "Nouvelle Partie", "newGame");
@@ -38,6 +35,14 @@ public class Menu extends JPanel {
     }
     
     /**
+     * Enables the resume button in the menu
+     */
+    public static void enableResume() {
+        canResume = true;
+        return;
+    }
+    
+    /**
      * Executes a function according to the given String
      * @param function
      */
@@ -46,8 +51,8 @@ public class Menu extends JPanel {
             case "quit":
                 quit();
                 break;
-            case "quickGame":
-                quickGame();
+            case "resume":
+                resume();
                 break;
             case "newGame":
                 newGame();
@@ -65,9 +70,9 @@ public class Menu extends JPanel {
     /**
      * Launch a quick game
      */
-    private void quickGame(){
-        System.out.println("Partie Rapide");
-        _parent.switchtoGame(new Map(20, 20, 100));
+    private void resume(){
+        System.out.println("Reprendre la partie");
+        Window.window.switchtoGame();
     }
     
     /**
@@ -75,6 +80,6 @@ public class Menu extends JPanel {
      */
     private void newGame(){
         System.out.println("Nouvelle partie");
-        _parent.switchToSettings();
+        Window.window.switchToSettings();
     }
 }

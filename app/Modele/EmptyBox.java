@@ -29,9 +29,9 @@ public class EmptyBox extends Box {
         _discovered = true;
             
         for (Position pos: neighbours()) {
-            Box box = _map.grid(pos);
+            Box box = Map.map.grid(pos);
             if (!box._discovered) {
-                _map.grid(pos).onClick();   
+                Map.map.grid(pos).onClick();   
             }
         } 
         return;
