@@ -1,6 +1,9 @@
 package app.View;
 
 import javax.swing.JPanel;
+
+import app.Modele.Map;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -15,8 +18,8 @@ public class Menu extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         
         gbc.gridy = 0;
-        MenuButton _continueButton = new MenuButton(this, "Continuer", "resume");
-        this.add(_continueButton, gbc);
+        MenuButton _quickButton = new MenuButton(this, "Partie rapide", "quickGame");
+        this.add(_quickButton, gbc);
 
         gbc.gridy = 1;
         MenuButton _playButton = new MenuButton(this, "Nouvelle Partie", "newGame");
@@ -34,8 +37,8 @@ public class Menu extends JPanel {
             case "quit":
                 quit();
                 break;
-            case "resume":
-                resume();
+            case "quickGame":
+                quickGame();
                 break;
             case "newGame":
                 newGame();
@@ -47,9 +50,9 @@ public class Menu extends JPanel {
         System.exit(0);
     }
     
-    private void resume(){
-        System.out.println("Reprise de la partie");
-        //_parent.switchtoGame();
+    private void quickGame(){
+        System.out.println("Partie Rapide");
+        _parent.switchtoGame(new Map(20, 20, 100));
     }
     
     private void newGame(){

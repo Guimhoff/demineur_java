@@ -19,8 +19,8 @@ public class CaseGrid extends JPanel {
         
         caseList = new ArrayList<Case>();
         
-        int sizeX = _parent._map.length();
-        int sizeY = _parent._map.width();
+        int sizeX = _parent._map.width();
+        int sizeY = _parent._map.length();
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -40,6 +40,5 @@ public class CaseGrid extends JPanel {
             case1.refresh();
         }
     }
-    
     
 }

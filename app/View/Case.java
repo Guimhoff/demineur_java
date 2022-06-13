@@ -7,17 +7,37 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.util.HashMap;
+import java.util.Map;
 
 import app.Modele.Position;
 import app.Modele.Box;
 
 public class Case extends JButton {
+
+    private static int _size = 32;
     
+    private static final Map<String, String> iconPaths = Map.ofEntries(
+        Map.entry("hided", "images/facingDown.png"),
+        Map.entry("flag", "images/flagged.png"),
+        Map.entry("bomb", "images/bomb.png"),
+        Map.entry("empty", "images/0.png"),
+        Map.entry("1", "images/1.png"),
+        Map.entry("2", "images/2.png"),
+        Map.entry("3", "images/3.png"),
+        Map.entry("4", "images/4.png"),
+        Map.entry("5", "images/5.png"),
+        Map.entry("6", "images/6.png"),
+        Map.entry("7", "images/7.png"),
+        Map.entry("8", "images/8.png")
+    );
     
-    public static final int size = 40;
+    private static Map<String, Icon> icons = new HashMap<>();
     
     private Game _parent;
     private Position _pos;
+    
+    private String icon;
 
     public Case(Game parent, Position pos) {
         super();
@@ -25,11 +45,10 @@ public class Case extends JButton {
         _parent = parent;
         _pos = pos;
         
-        
         this.setMargin(new Insets(0, 0, 0, 0));
         this.setBorderPainted(false);
         
-        Dimension dim = new Dimension(size, size);
+        Dimension dim = new Dimension(_size, _size);
         
         this.setPreferredSize(dim);
         this.setMinimumSize(dim);
@@ -44,19 +63,23 @@ public class Case extends JButton {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                // TODO Auto-generated method stub
-                
+                if(SwingUtilities.isRightMouseButton(e)){
+                    _parent._map.rightClick(pos);
+                    refresh();
+                } else {
+                    _parent._map.leftClick(pos);
+                    String boxType = _parent._map.grid()[_pos.get_y()][pos.get_x()].get_type();
+                    if (boxType == Box.emptyBox || boxType == Box.bombBox)
+                        _parent.refresh();
+                    else
+                        refresh();
+                }
+                _parent.refreshUI();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 // TODO Auto-generated method stub
-                if(SwingUtilities.isRightMouseButton(e)){
-                    _parent._map.grid()[_pos.get_y()][pos.get_x()].rightClick();;
-                } else {
-                    _parent._map.grid()[_pos.get_y()][pos.get_x()].onClick();
-                }
-                _parent.refresh();
             }
 
             @Override
@@ -76,17 +99,13 @@ public class Case extends JButton {
     public void refresh(){
         Box box = _parent._map.grid(_pos);
         
-        ImageIcon img = new ImageIcon();
-        
         if (box.get_marked()) {
-            img = icon("images/flagged.png");
-            this.setIcon(img);
+            changeIcon("flag");
             return;
         }
         
         if (!box.get_discovered()) {
-            img = icon("images/facingDown.png");
-            this.setIcon(img);
+            changeIcon("hided");
             return;
         }
         
@@ -95,25 +114,51 @@ public class Case extends JButton {
         
         switch (boxType) {
             case Box.emptyBox:
-                img = icon("images/0.png");
-                this.setIcon(img);
+                changeIcon("empty");
                 return;
             case Box.bombBox:
-                img = icon("images/bomb.png");
-                this.setIcon(img);
+                changeIcon("bomb");
                 return;
         }
         
-        img = icon("images/" + box.closeBombs() + ".png");
-        this.setIcon(img);
+        changeIcon(Integer.toString(box.closeBombs()));
         return;
         
     }
     
-    private ImageIcon icon(String filename){
+    private void changeIcon(String newIcon){
+        if (icon == newIcon) return;
+        
+        addIcon(newIcon);
+        
+        this.setIcon(icons.get(newIcon));
+        
+        return;
+    }
+    
+    private static ImageIcon genIcon(String filename) {
         ImageIcon imageIcon = new ImageIcon(filename); // load the image to a imageIcon
         Image image = imageIcon.getImage(); // transform it 
-        Image newimg = image.getScaledInstance(size, size,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-        return new ImageIcon(newimg);  // transform it back
+        int presentSize = 2048;
+        
+        while(presentSize > _size*2) {
+            presentSize /= 2;
+            image = image.getScaledInstance(presentSize, presentSize, java.awt.Image.SCALE_SMOOTH);
+        }
+        
+        image = image.getScaledInstance(_size, _size, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
+    }
+    
+    public static void lateInit() {
+        
+        for (String key : iconPaths.keySet()) {
+            addIcon(key);
+        }
+    }
+    
+    private static void addIcon(String name) {
+        if(!icons.containsKey(name))
+            icons.put(name, genIcon(iconPaths.get(name)));
     }
 }

@@ -3,19 +3,33 @@ import java.util.ArrayList;
 
 
 public abstract class Box {
+    /* Abstract class representing a box which can contain a nothing, a bomb, or a number */
 
     public static final String emptyBox = "emptyBox";
     public static final String bombBox = "bombBox";
     public static final String numberBox = "numberBox";
-
+    
+    /* Type of box */
     private String _type;
+    /* Position of the box on the map */
     protected Position _pos;
+    /* Is the box marked with a flag */
     protected Boolean _marked;
+    /* Is the box discovered */
     protected Boolean _discovered;
+    /* Has the box exploded */
     protected Boolean _exploded;
     
+    /* Map on which is located the box */
     protected Map _map;
     
+    /**
+     * Constructor using direct coordinates
+     * @param type
+     * @param x
+     * @param y
+     * @param map
+     */
     Box(String type, int x, int y, Map map) {
         _type = type;
         _pos = new Position(x, y);
@@ -24,6 +38,12 @@ public abstract class Box {
         _map = map;
     }
     
+    /**
+     * Constructor using Position
+     * @param type
+     * @param pos
+     * @param map
+     */
     Box(String type, Position pos, Map map) {
         _type = type;
         _pos = pos;
@@ -52,7 +72,16 @@ public abstract class Box {
     public Boolean get_marked() {
         return _marked;
     }
-
+    
+    /**
+     * set the _marked
+     * @param bool
+     */
+    public void set_marked(boolean bool) {
+        _marked = bool;
+        return;
+    }
+    
     /**
      * @return the _discovered
      */
@@ -60,38 +89,66 @@ public abstract class Box {
         return _discovered;
     }
     
+    /**
+     * Reveals the box
+     */
     public void reveal() {
         _discovered = true;
         return;
     }
     
+    /**
+     * Returns the neighbours of the box
+     * @return array of positions
+     */
     public ArrayList<Position> neighbours() {
         return _map.neighbours(_pos);
     }
-
-    public ArrayList<Position> directNeighbours() {
-        return _map.directNeighbours(_pos);
-    }
-
+    
+    /**
+     * Actions executed when left-clicking on the undiscovered box, depending of the box type
+     */
     abstract protected void clickAction();
     
+    /**
+     * Actions executed when left-clicking on the box, whatever is the box type
+     */
     public void onClick() {
         if (_map.get_gameOver()) return;
         if (_discovered) return;
         if (_marked) return;
         
         clickAction();
+        _map.unhideBox();
+        return;
     }
     
+    /**
+     * Actions executed when right-clicking on the box (indentical for each box type)
+     */
     public void rightClick() {
         if (_map.get_gameOver()) return;
         if (_discovered) return;
         
         _marked = !_marked;
+        
+        if (_marked)
+            _map.addMarkedBox();
+        else
+            _map.removeMarkedBox();
+        
+        return;
     }
     
+    /**
+     * Add neighbouring bomb to the counter for NumberBox, empty for other types
+     */
     public void addCloseBomb() {}
 
+    /**
+     * Returns the number of close bombs for numberBox, -1 for other types
+     * @return number of close bombs, or -1
+     */
     public int closeBombs() {
         return -1;
     }

@@ -25,6 +25,14 @@ public class Fenetre extends JFrame {
         
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize(900,900);
+        
+
+        Thread thread = new Thread(){
+            public void run(){
+                Case.lateInit();
+            }
+        };
+        thread.start();
     }
     
     public void switchToMenu(){

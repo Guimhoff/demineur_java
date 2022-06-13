@@ -1,6 +1,5 @@
 package app.View;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.GridBagConstraints;
@@ -14,23 +13,27 @@ public class Game extends JPanel {
     
     public Map _map;
     
-    private CaseGrid caseGrid;
+    private CaseGrid _caseGrid;
+    private HeadGameUI _headUI;
 
     public Game(Fenetre parent, Map map){
         _parent = parent;
         _map = map;
 
+
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        
-        JButton _continueButton = new JButton("Jeu");
-        this.add(_continueButton, gbc);
+                
+        _headUI = new HeadGameUI(this, _parent);
+        this.add(_headUI, gbc);
         
         gbc.gridy = 1;
-        caseGrid = new CaseGrid(this);
-        this.add(caseGrid, gbc);
+        _caseGrid = new CaseGrid(this);
+        this.add(_caseGrid, gbc);
+        
         
         refresh();
+        
     }
     
     public Map get_map() {
@@ -38,6 +41,12 @@ public class Game extends JPanel {
     }
     
     public void refresh() {
-        caseGrid.refresh();
+        _caseGrid.refresh();
+        return;
+    }
+    
+    public void refreshUI() {
+        _headUI.refresh();
+        return;
     }
 }
