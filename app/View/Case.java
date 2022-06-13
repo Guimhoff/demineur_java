@@ -14,9 +14,12 @@ import app.Modele.Position;
 import app.Modele.Box;
 
 public class Case extends JButton {
-
+    /* UI respresentation of a box */
+    
+    /* Size of the case */
     private static int _size = 32;
     
+    /* Map of paths of leading to the icons */
     private static final Map<String, String> iconPaths = Map.ofEntries(
         Map.entry("hided", "images/facingDown.png"),
         Map.entry("flag", "images/flagged.png"),
@@ -32,13 +35,22 @@ public class Case extends JButton {
         Map.entry("8", "images/8.png")
     );
     
+    /* Map of loaded icons */
     private static Map<String, Icon> icons = new HashMap<>();
     
+    /* parent object of the case */
     private Game _parent;
+    /* Position of the case */
     private Position _pos;
     
+    /* Current icon of the case */
     private String icon;
-
+    
+    /**
+     * Constructor
+     * @param parent
+     * @param pos
+     */
     public Case(Game parent, Position pos) {
         super();
 
@@ -53,6 +65,7 @@ public class Case extends JButton {
         this.setPreferredSize(dim);
         this.setMinimumSize(dim);
         
+        // Associates clicks with actions
         this.addMouseListener(new MouseListener() {
 
             @Override
@@ -68,7 +81,7 @@ public class Case extends JButton {
                     refresh();
                 } else {
                     _parent._map.leftClick(pos);
-                    String boxType = _parent._map.grid()[_pos.get_y()][pos.get_x()].get_type();
+                    String boxType = _parent._map.grid(_pos.get_x(), _pos.get_y()).get_type();
                     if (boxType == Box.emptyBox || boxType == Box.bombBox)
                         _parent.refresh();
                     else
@@ -96,6 +109,9 @@ public class Case extends JButton {
         });
     }
     
+    /**
+     * Refreshs the icon
+     */
     public void refresh(){
         Box box = _parent._map.grid(_pos);
         
@@ -126,6 +142,10 @@ public class Case extends JButton {
         
     }
     
+    /**
+     * Changes the icon
+     * @param newIcon
+     */
     private void changeIcon(String newIcon){
         if (icon == newIcon) return;
         
@@ -136,6 +156,11 @@ public class Case extends JButton {
         return;
     }
     
+    /**
+     * Loads or returns the given icon
+     * @param filename of the icon
+     * @return icon
+     */
     private static ImageIcon genIcon(String filename) {
         ImageIcon imageIcon = new ImageIcon(filename); // load the image to a imageIcon
         Image image = imageIcon.getImage(); // transform it 
@@ -150,13 +175,20 @@ public class Case extends JButton {
         return new ImageIcon(image);
     }
     
-    public static void lateInit() {
+    /**
+     * Initialize the icon map
+     */
+    public static void earlyInit() {
         
         for (String key : iconPaths.keySet()) {
             addIcon(key);
         }
     }
     
+    /**
+     * Add an icon to the icon map
+     * @param name
+     */
     private static void addIcon(String name) {
         if(!icons.containsKey(name))
             icons.put(name, genIcon(iconPaths.get(name)));

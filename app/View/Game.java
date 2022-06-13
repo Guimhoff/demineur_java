@@ -8,15 +8,25 @@ import java.awt.GridBagLayout;
 import app.Modele.*;
 
 public class Game extends JPanel {
-
-    public Fenetre _parent;
+    /* UI displayed when playing */
     
+    /* Parent window */
+    public Window _parent;
+        
+    /* Map of the game */
     public Map _map;
     
+    /* CaseGrid displayed */
     private CaseGrid _caseGrid;
+    /* HeadGameUI displayed */
     private HeadGameUI _headUI;
 
-    public Game(Fenetre parent, Map map){
+    /**
+     * Constructor
+     * @param parent
+     * @param map
+     */
+    public Game(Window parent, Map map){
         _parent = parent;
         _map = map;
 
@@ -36,15 +46,25 @@ public class Game extends JPanel {
         
     }
     
+    /**
+     * Getter of _map
+     * @return _map
+     */
     public Map get_map() {
         return _map;
     }
     
+    /**
+     * Refreshes all the _caseGrid
+     */
     public void refresh() {
         _caseGrid.refresh();
         return;
     }
     
+    /**
+     * Refreshes the _headUI
+     */
     public void refreshUI() {
         _headUI.refresh();
         return;

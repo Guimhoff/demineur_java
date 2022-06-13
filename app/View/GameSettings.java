@@ -18,23 +18,39 @@ import javax.swing.JLabel;
 import app.Modele.Map;
 
 public class GameSettings extends JPanel {
+    /* UI displayed when configuring a new game */
     
-    private Fenetre _parent;
+    /* parent window */
+    private Window _parent;
     
+    /* play button */
     private JButton _playButton;
+    /* slider setting the length */
     private JSlider _lengthSlider;
+    /* Label showing the length */
     private JLabel _lengthLab;
+    /* slider setting the width */
     private JSlider _widthSlider;
+    /* Label showing the width */
     private JLabel _widthLab;
+    /* slider setting the bomb percentage */
     private JSlider _bombsSlider;
+    /* Label showing the bomb percentage */
     private JLabel _bombsLab;
     
-    GameSettings(Fenetre parent){
+    /**
+     * Constructor
+     * @param parent
+     */
+    GameSettings(Window parent){
         _parent = parent;
         
         drawInterface();
     }
     
+    /**
+     * Draws the interface and maps sliders and button to actions
+     */
     private void drawInterface(){
 
         this.setLayout(new GridBagLayout());
@@ -134,20 +150,33 @@ public class GameSettings extends JPanel {
         bombsTxt();        
     }
     
+    /**
+     * Calculates the number of bombs presents on the map according to bomb percentage and map size
+     * @return bomb number
+     */
     private int nbBombs() {
         return _bombsSlider.getValue() * _lengthSlider.getValue() * _widthSlider.getValue() / 100;
     }
     
+    /**
+     * Updates length label
+     */
     private void lengthTxt() {
         _lengthLab.setText(_lengthSlider.getValue() + " lignes");
         return;
     }
-    
+
+    /**
+     * Updates width label
+     */
     private void widthTxt() {
         _widthLab.setText(_widthSlider.getValue() + " colonnes");
         return;
     }
-    
+
+    /**
+     * Updates bombs label
+     */
     private void bombsTxt() {
         _bombsLab.setText(_bombsSlider.getValue() + " % - " + nbBombs() + " bombes / " 
         + (_widthSlider.getValue() * _lengthSlider.getValue()) + " cases");

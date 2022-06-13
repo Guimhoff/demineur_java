@@ -8,10 +8,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 public class Menu extends JPanel {
+    /* Main menu of the game (UI) */
     
-    private Fenetre _parent;
+    /* Parent window */
+    private Window _parent;
     
-    public Menu (Fenetre parent) {
+    /**
+     * Constructor
+     * @param parent
+     */
+    public Menu (Window parent) {
         _parent = parent;
     
         this.setLayout(new GridBagLayout());
@@ -31,7 +37,10 @@ public class Menu extends JPanel {
         
     }
     
-    
+    /**
+     * Executes a function according to the given String
+     * @param function
+     */
     public void execute(String function){
         switch (function){
             case "quit":
@@ -46,15 +55,24 @@ public class Menu extends JPanel {
         }
     }
     
+    /**
+     * Quits the game
+     */
     private void quit(){
         System.exit(0);
     }
     
+    /**
+     * Launch a quick game
+     */
     private void quickGame(){
         System.out.println("Partie Rapide");
         _parent.switchtoGame(new Map(20, 20, 100));
     }
     
+    /**
+     * Open the configuration window for a new game
+     */
     private void newGame(){
         System.out.println("Nouvelle partie");
         _parent.switchToSettings();

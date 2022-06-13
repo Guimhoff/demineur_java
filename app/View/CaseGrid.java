@@ -9,11 +9,18 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 public class CaseGrid extends JPanel {
+    /* UI grid of cases */
     
+    /* Parent of the CaseGrid */
     public Game _parent;
     
+    /* List of cases */
     private ArrayList<Case> caseList;
     
+    /**
+     * Constructor
+     * @param parent
+     */
     public CaseGrid(Game parent) {
         _parent = parent;
         
@@ -35,6 +42,7 @@ public class CaseGrid extends JPanel {
         
     }
     
+    /* Refresh all the cases of the grid */
     public void refresh(){
         for (Case case1 : caseList) {
             case1.refresh();

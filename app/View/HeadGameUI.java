@@ -9,14 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HeadGameUI extends JPanel {
+    /* Head of the game UI */
     
+    /* Game UI */
     Game _parent;
-    Fenetre _fenetre;
+    /* Window parent of the game */
+    Window _fenetre;
     
+    /* Label displaying victory or defeat */
     private JLabel _gameState;
+    /* Label displaying number of placed flags and number of bombs */
     private JLabel _bombCount;
     
-    HeadGameUI(Game parent, Fenetre fenetre) {
+    /**
+     * Constructor
+     * @param parent
+     * @param fenetre
+     */
+    HeadGameUI(Game parent, Window fenetre) {
         _parent = parent;
         _fenetre = fenetre;
         
@@ -47,6 +57,9 @@ public class HeadGameUI extends JPanel {
         refresh();
     }
     
+    /**
+     * Refreshes the interface
+     */
     public void refresh() {
         
         _bombCount.setText(_parent._map.get_markedBoxes() + "/" + _parent._map.get_bombNumber() + " bombes marquées");
