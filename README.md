@@ -4,6 +4,7 @@ Projet de java (ESIREM)
 
 Sujet libre : réalisation d'un démineur
 
+Auteur : Guillaume IMHOFF (IE3A - TD1 - TP2)
 
 Fonctionnalités :
 
