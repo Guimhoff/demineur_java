@@ -37,7 +37,6 @@ public class HeadGameUI extends JPanel {
         _backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Retour au menu");
                 Window.window.switchToMenu();
             }
         });

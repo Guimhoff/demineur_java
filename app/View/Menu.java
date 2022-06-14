@@ -71,7 +71,6 @@ public class Menu extends JPanel {
      * Launch a quick game
      */
     private void resume(){
-        System.out.println("Reprendre la partie");
         Window.window.switchtoGame();
     }
     
@@ -79,7 +78,6 @@ public class Menu extends JPanel {
      * Open the configuration window for a new game
      */
     private void newGame(){
-        System.out.println("Nouvelle partie");
         Window.window.switchToSettings();
     }
 }
