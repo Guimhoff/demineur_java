@@ -12,5 +12,5 @@ Fonctionnalités :
 - Impossible de toucher une bombe lors du premier clic
 - Choix de la taille de la zone du jeu et du nombre de bombes
 - Sauvegarde de ces paramètres pour la prochaine session de jeu
-- Sauvegarde de la partie en cours et possibilité de la continuer même après avoir relancé le je
+- Sauvegarde de la partie en cours et possibilité de la continuer même après avoir relancé le jeu
 - Jeu fluide
